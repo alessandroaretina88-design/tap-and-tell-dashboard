@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TAP & TELL – Dashboard Ospedale</title>
+<style>
+:root{--blue:#07537c;--cyan:#0792a8;--green:#159b83;--ink:#12344a;--muted:#6e8391;--line:#d7e2e8;--bg:#f4f8fa;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1180px;margin:auto;padding:24px}
+header{background:#fff;border-radius:24px;padding:22px 26px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 10px #1232}
+.logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(145deg,var(--blue),var(--cyan));color:#fff;display:grid;place-items:center;font-size:30px;font-weight:800}
+.brand{flex:1}.brand b{display:block;font-size:25px}.brand span{color:var(--muted)}
+.badge{font-size:13px;font-weight:800;color:#08739b;background:#e9f6fa;padding:10px 14px;border-radius:999px}
+.notice{margin:18px 0;background:#edf9f6;border:1px solid #bfe1d9;border-radius:18px;padding:15px 18px;color:#176b60}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 2px 8px #1231}
+.kpi .label{color:var(--muted);font-size:14px}.kpi .value{font-size:34px;font-weight:800;margin-top:8px;color:var(--blue)}
+.section{margin-top:18px}
+.section h2{font-size:19px;margin:0 0 14px}
+.two{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.bar-row{display:grid;grid-template-columns:180px 1fr 48px;gap:10px;align-items:center;margin:13px 0;font-size:14px}
+.track{height:12px;background:#edf2f5;border-radius:999px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:12px;text-transform:uppercase}
+.comment{padding:14px 0;border-bottom:1px solid var(--line)}.comment:last-child{border:0}.comment small{color:var(--muted)}
+.empty{color:var(--muted);padding:22px 0;text-align:center}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}}
+@media(max-width:520px){.wrap{padding:12px}.grid{grid-template-columns:1fr}.badge{display:none}.bar-row{grid-template-columns:120px 1fr 40px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">T</div>
+  <div class="brand"><b>TAP & TELL</b><span>Dashboard Patient Experience – Area riservata struttura sanitaria</span></div>
+  <div class="badge">PROGETTO PILOTA</div>
+</header>
+
+<div class="notice"><b>Dati anonimi.</b> La dashboard visualizza esclusivamente risultati aggregati e commenti del questionario, senza nome, contatti o cartella clinica.</div>
+
+<div class="grid">
+  <div class="card kpi"><div class="label">Feedback ricevuti</div><div class="value" id="totale">—</div></div>
+  <div class="card kpi"><div class="label">Valutazione complessiva</div><div class="value" id="media">—</div></div>
+  <div class="card kpi"><div class="label">Accoglienza personale</div><div class="value" id="personale">—</div></div>
+  <div class="card kpi"><div class="label">Informazioni chiare</div><div class="value" id="chiare">—</div></div>
+</div>
+
+<div class="two section">
+  <div class="card">
+    <h2>Feedback per servizio</h2>
+    <div id="servizi" class="empty">In attesa del collegamento ai dati Netlify.</div>
+  </div>
+  <div class="card">
+    <h2>Chiarezza delle informazioni</h2>
+    <div id="chiarezza" class="empty">In attesa del collegamento ai dati Netlify.</div>
+  </div>
+</div>
+
+<div class="card section">
+  <h2>Riepilogo risultati</h2>
+  <table>
+    <thead><tr><th>Indicatore</th><th>Risultato</th><th>Scala</th></tr></thead>
+    <tbody>
+      <tr><td>Esperienza complessiva</td><td id="tabMedia">—</td><td>1–5</td></tr>
+      <tr><td>Accoglienza e disponibilità del personale</td><td id="tabPersonale">—</td><td>1–5</td></tr>
+      <tr><td>Informazioni chiare</td><td id="tabChiare">—</td><td>Sì / In parte / No</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card section">
+  <h2>Commenti anonimi</h2>
+  <div id="commenti" class="empty">Nessun commento da visualizzare al momento.</div>
+</div>
+
+<footer>TAP & TELL – Patient Experience • Dashboard dimostrativa. La configurazione definitiva e gli accessi dovranno essere validati dalla struttura sanitaria.</footer>
+</div>
+
+<script>
+/*
+  Questa è la dashboard professionale di base.
+  Il questionario paziente rimane invariato.
+  Nel passaggio successivo collegheremo questa pagina alle submission
+  del form Netlify "patient-experience" tramite un accesso server-side sicuro.
+  NON inserire token Netlify direttamente in questo file HTML.
+*/
+</script>
+</body>
+</html>
