@@ -79,13 +79,25 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
 </div>
 
 <script>
-/*
-  Questa è la dashboard professionale di base.
-  Il questionario paziente rimane invariato.
-  Nel passaggio successivo collegheremo questa pagina alle submission
-  del form Netlify "patient-experience" tramite un accesso server-side sicuro.
-  NON inserire token Netlify direttamente in questo file HTML.
-*/
-</script>
+async function caricaDati() {
+  try {
+    const risposta = await fetch("https://steady-lokum-33078a.netlify.app/.netlify/functions/dashboard-data");
+    const dati = await risposta.json();
+    console.log(dati);
+  } catch (errore) {
+    console.error("Errore caricamento dati:", errore);
+  }
+}
+
+caricaDati();
+</sc
+</sc</script>
 </body>
 </html>
+</bod
+</h
+</bod
+  
+
+
+
