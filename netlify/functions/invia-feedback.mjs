@@ -41,4 +41,18 @@ export default async (request) => {
     }
 
     await getStore('feedback-pazienti').setJSON(randomUUID(), {
-      servizio:
+      servizio:d.servizio,
+      valutazione_complessiva: Number(d.valutazione_complessiva),
+      personale: Number(d.personale),
+      informazioni_chiare: d.informazioni_chiare,
+      commento: d.commento.trim(),
+      data: new Date().toISOString()
+    });
+
+    return Response.json({ ok: true }, { status: 201, headers });
+  } catch (errore) {
+    console.error(errore);
+    return Response.json({ error: 'Impossibile salvare il feedback' },
+      { status: 500, headers });
+  }
+};
