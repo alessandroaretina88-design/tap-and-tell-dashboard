@@ -1,46 +1,61 @@
+
 import { getStore } from '@netlify/blobs';
 
 export default async () => {
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Cache-Control': 'no-store'
+  };
+
   try {
     const store = getStore('feedback-pazienti');
+    const risposte = [];
+
     const { blobs } = await store.list();
-    const risposte = (await Promise.all(
-      blobs.map(({ key }) => store.get(key, { type: 'json' }))
-    )).filter(Boolean);
+
+    for (const { key } of blobs) {
+      const risposta = await store.get(key, { type: 'json' });
+      if (risposta) risposte.push(risposta);
+    }
+
     const totale = risposte.length;
+
     const conta = campo => risposte.reduce((a, r) => {
-      a[r[campo]] = (a[r[campo]] || 0) + 1;
+      const valore = r[campo];
+      if (valore != null) {
+        a[valore] = (a[valore] || 0) + 1;
+      }
       return a;
     }, {});
-    const mediaDi = campo => totale
-      ? risposte.reduce((s, r) => s + Number(r[campo]), 0) / totale
-      : null;
+
+    const mediaDi = campo => {
+      const numeri = risposte
+        .map(r => Number(r[campo]))
+        .filter(n => Number.isFinite(n) && n >= 1 && n <= 5);
+      return numeri.length
+        ? numeri.reduce((a, b) => a + b, 0) / numeri.length
+        : null;
+    };
+
     const chiare = risposte.filter(
       r => r.informazioni_chiare === 'Sì'
     ).length;
-        return Response.json({
+
+    return Response.json({
       totale,
       media: mediaDi('valutazione_complessiva'),
       personale: mediaDi('personale'),
-      chiarePercent: totale
-        ? Math.round(chiare * 100 / totale) : null,
-      chiareTesto: totale ? `${chiare} su ${totale}` : null,
+      chiare,
       servizi: conta('servizio'),
-      chiarezza: conta('informazioni_chiare'),
-      commenti: risposte
-        .filter(r => r.commento)
-        .sort((a, b) => b.data.localeCompare(a.data))
-        .slice(0, 20)
-        .map(r => ({
-          testo: r.commento,
-          data: new Date(r.data).toLocaleDateString('it-IT')
-        }))
-    }, { headers: { 'Cache-Control': 'no-store' } });
-  } catch (errore) {
-    console.error(errore);
+      valutazioni: conta('valutazione_complessiva')
+    }, { headers });
+
+  } catch (error) {
+    console.error('Errore dashboard:', error);
     return Response.json(
-      { error: 'Impossibile leggere i feedback' },
-      { status: 500 }
+      { error: 'Errore nel caricamento delle risposte' },
+      { status: 500, headers }
     );
   }
 };
+  
